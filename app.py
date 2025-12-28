@@ -23,6 +23,10 @@ lambda_client = get_lambda_client()
 
 st.set_page_config(page_title='Tissue Classifer', page_icon = '🔬', layout='wide')
 
+# If image is selected from preview, keep it in memory across button clicks
+if 'active_image' not in st.session_state:
+    st.session_state['active_image'] = None
+
 # ========== 
 # Create a sidebar for sample images
 # ==========
@@ -42,12 +46,12 @@ if os.path.exists(sample_dir):
         # column layout
         col1, col2 = st.sidebar.columns([1,2])
         with col1:
-            st.image(img_display, use_container_width=True)
+            st.image(img_display, width='stretch')
         with col2:
             # add short labels
             label = 'Negative' if 'non' in sample else 'Positive'
-            if st.button(f"Load {label}", key = sample):
-                selected_sample = img_display
+            if st.button(f"Load '{label}'", key = sample):
+                st.session_state['active_image'] = img_display
         st.sidebar.divider()
 
 # ==========
@@ -89,7 +93,7 @@ with st.expander("About this Project and Dataset"):
 
 st.info(
     """
-    ** How to use:** 
+    **How to use:** 
     1. **Upload** a histopathologic slide patch (96x96 pixels) below.
     2. Alternatively, **select a sample** from the sidebar on the left.
     3. Click **'Classify'** to run the ResNet-18 model via AWS Lambda.
@@ -101,8 +105,9 @@ uploaded_file = st.file_uploader("Upload patch", type = ['png', 'jpg'])
 input_image = None
 if uploaded_file:
     input_image = Image.open(uploaded_file)
-elif selected_sample:
-    input_image = selected_sample
+    st.session_state['active_image'] = input_image
+else:
+    input_image = st.session_state['active_image']
 
 # Display selected image and classify
 if input_image:
