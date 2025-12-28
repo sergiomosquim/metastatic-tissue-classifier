@@ -160,7 +160,7 @@ if input_image:
                     with col_a:
                         st.metric('Probability of Metastasis (model probability)', f'{prob:.2%}')
                     with col_b:
-                        st.write(f"**Interpretation:** {confidence_text}")
+                        st.metric('Confidence', f'{confidence_text}')
                     
                     st.caption("Threshold: 50% | Values > 50% are classified as Metastatic.")
                     with st.expander("How to interpret these results"):
