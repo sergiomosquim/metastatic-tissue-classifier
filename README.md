@@ -59,7 +59,7 @@ This project uses a Private Cloud approach:
 ## Installation
 1. Clone the repository
 ```bash
-git clone <your-repository-url>
+git clone https://github.com/sergiomosquim/metastatic-tissue-classifier.git
 cd metastatic-tissue-classifier
 ```
 
@@ -74,7 +74,7 @@ uv sync --locked
 
 ### Option 1: Live Web App (Recommended)
 The easiest way to test the classifier is via the hosted Streamlit interface.
-**[URL]**
+**[Click here](https://metastatic-tissue-classifier.streamlit.app)**
 
 ### Option 2: Local Docker Testing
 If you wish to test the model locally without AWS, run the containerized backend using Docker:
