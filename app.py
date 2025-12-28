@@ -139,14 +139,45 @@ if input_image:
                     pred = inner_body['prediction']
                     prob = inner_body['probability']
 
-                    st.divider()
-                    if pred == 'Metastatic':
-                        st.error(f"**Result:** {pred}")
+                    # Determine confidence level
+                    ## How far the probability is from 50%
+                    distance_from_threshold = abs(prob-0.5)
+                    if distance_from_threshold > 0.3:
+                        confidence_text = 'High Confidence'
+                    elif distance_from_threshold > 0.1:
+                        confidence_text = 'Moderate Confidence'
                     else:
-                        st.success(f"**Result:** {pred}")
+                        confidence_text = 'Low Confidence (Borderline)'
+                    
+                    # visual header
+                    if pred == 'Metastatic':
+                        st.error(f"### Classification: {pred}")
+                    else:
+                        st.success(f"### Classification: {pred}")
+                    
+                    # Probability interpretation
+                    col_a, col_b = st.columns(2)
+                    with col_a:
+                        st.metric('Probability of Metastasis (model probability)', f'{prob:.2%}')
+                    with col_b:
+                        st.write(f"**Interpretation:** {confidence_text}")
+                    
+                    st.caption("Threshold: 50% | Values > 50% are classified as Metastatic.")
+                    with st.expander("How to interpret these results"):
+                        st.write(
+                            """
+                            This model uses a binary threshold at **50% (0.5)**:
+                            * **Probability < 50%**: The model predicts the tissue is *Non-Metastatic (Negative)*
+                            * **Probability > 50%**: The model predicts the tissue is *Metastatic (Positive)*
 
-                    st.metric('Probability', f'{prob:.2%}')
-                    st.progress(prob)
+                            **Understanding Confidence:**
+                            The further the percentage is from 50%, the more "confident" the model is.
+                            * A results of **99%** or **1%** indicates a very confident prediction.
+                            * Conversely, a result of **48%** or **52%** indicates the model is uncertain, as these values are very close to the threshold (decision boundary).
+                            """
+                        )
+
+                    st.divider()
                 else:
                     st.error(f"AWS Error: {response['StatusCode']}")
             except Exception as e:
