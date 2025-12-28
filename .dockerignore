@@ -1,0 +1,38 @@
+# Ignore local AWS credentials
+.aws/
+credentials
+config
+
+# Ignore environment variables
+.env
+
+# Ignore version control and local dev files
+.git/
+.gitignore
+venv/
+.venv/
+__pycache__/
+*.pyc
+
+# Ignore the Streamlit app (it's not needed in the Lambda container)
+app.py
+
+# Large Data Files
+data/pcam/
+data/Labels/
+data/Metadata/
+data/*.h5
+
+# Large Model Files (Keep only the .onnx for Lambda)
+models/*.pth
+models/*.pth.tar
+
+# Local Environment & Secrets
+.venv/
+venv/
+__pycache__/
+.streamlit/secrets.toml
+.env
+
+# MacOS hidden files
+.DS_Store

@@ -1,0 +1,31 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+
+# Large Data Files
+data/pcam/
+data/Labels/
+data/Metadata/
+data/*.h5
+data/camelyonpatch_level_2_split_train_mask/
+
+# Model Files
+models/
+
+# Local Environment & Secrets
+.venv/
+venv/
+__pycache__/
+.streamlit/secrets.toml
+.aws
+.env
+
+# MacOS hidden files
+.DS_Store

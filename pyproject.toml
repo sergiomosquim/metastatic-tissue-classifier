@@ -1,0 +1,29 @@
+[project]
+name = "metastatic-tissue-classifier"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.11.13"
+dependencies = [
+    "numpy<2",
+    "onnxruntime==1.16.3",
+    "pillow>=12.0.0",
+    "requests>=2.32.5",
+]
+
+[dependency-groups]
+app = [
+    "boto3>=1.42.17",
+    "streamlit>=1.52.2",
+]
+train = [
+    "h5py>=3.15.1",
+    "matplotlib>=3.10.8",
+    "onnx>=1.19.0",
+    "pandas>=2.3.3",
+    "scikit-learn>=1.8.0",
+    "seaborn>=0.13.2",
+    "torch==2.2.2",
+    "torchsummary>=1.5.1",
+    "torchvision==0.17.2",
+]
